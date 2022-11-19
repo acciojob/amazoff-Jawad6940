@@ -66,8 +66,12 @@ public class OrderRepository {
 
     public Integer getOrderCountByPartnerIdRepo(String partnerId) {
         if(partnerHm.containsKey(partnerId)){
-            DeliveryPartner partner=partnerHm.get(partnerId);
-            return partner.getNumberOfOrders();
+            if(partnerHm.containsKey(partnerId)){
+                DeliveryPartner partner=partnerHm.get(partnerId);
+                return partner.getNumberOfOrders();
+            }
+
+
         }
         return 0;
     }
@@ -97,7 +101,13 @@ public class OrderRepository {
     }
 
     public Integer getCountOfUnassignedOrdersRepo() {
-        return (orderHashMap.size()-pairHmOrder.size());
+        if(!orderHashMap.isEmpty()) {
+            if(!pairHmOrder.isEmpty()){
+                return (orderHashMap.size() - pairHmOrder.size());
+            }
+
+        }
+        return 0;
     }
 
     public Integer getOrdersLeftAfterGivenTimeByPartnerIdRepo(String time, String partnerId) {
@@ -145,7 +155,9 @@ public class OrderRepository {
     public void deletePartnerByIdRepo(String partnerId) {
         if (pairHm.containsKey(partnerId)){
             pairHm.remove(partnerId);
-            partnerHm.remove(partnerId);
+            if(partnerHm.containsKey(partnerId)) {
+                partnerHm.remove(partnerId);
+            }
         }
 
     }
