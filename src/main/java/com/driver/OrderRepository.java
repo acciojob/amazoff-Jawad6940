@@ -76,27 +76,24 @@ public class OrderRepository {
         List<String >list=new ArrayList<>();
         if(pairHm.containsKey(partnerId)){
 
-            for (String s:pairHm.get(partnerId)
-                 ) {
-                String currOrder=orderHashMap.get(s).toString();
-                list.add(currOrder);
-            }
+            return pairHm.get(partnerId);
 
         }
         return list;
     }
 
     public List<String> getAllOrdersRepo() {
+        List<String> list= new ArrayList<>();
         if (!orderHashMap.isEmpty()){
-            List<String> list= new ArrayList<>();
-            for (Order o :
-                    orderHashMap.values()) {
-                list.add(o.toString());
+
+            for (String s:
+                    orderHashMap.keySet()) {
+                list.add(s);
                 
             }
-            return list;
+
         }
-        return null;
+        return list;
     }
 
     public Integer getCountOfUnassignedOrdersRepo() {

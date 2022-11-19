@@ -20,13 +20,7 @@ public class Order {
         //deliveryTime  = HH*60 + MM
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id='" + id + '\'' +
-                ", deliveryTime=" + deliveryTime +
-                '}';
-    }
+
 
     public String getId() {
         return id;
@@ -34,6 +28,12 @@ public class Order {
 
     public int getDeliveryTime() {return deliveryTime;}
 
-
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id='" + id + '\'' +
+                ", deliveryTime=" + deliveryTime +
+                '}';
+    }
 
 }
