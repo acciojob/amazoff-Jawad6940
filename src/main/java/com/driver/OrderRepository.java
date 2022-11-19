@@ -47,7 +47,7 @@ public class OrderRepository {
     }
 
     public Order getOrderByIdServiceRepo(String orderId) {
-        if(orderHashMap.containsKey(orderId)){
+        if(!orderHashMap.isEmpty() && orderHashMap.containsKey(orderId)){
             return orderHashMap.get(orderId);
         }
         else{
@@ -56,7 +56,7 @@ public class OrderRepository {
     }
 
     public DeliveryPartner getPartnerByIdRepo(String partnerId) {
-        if(partnerHm.containsKey(partnerId)){
+        if(!partnerHm.isEmpty()&&partnerHm.containsKey(partnerId)){
             return partnerHm.get(partnerId);
         }
         else{
@@ -65,7 +65,7 @@ public class OrderRepository {
     }
 
     public Integer getOrderCountByPartnerIdRepo(String partnerId) {
-        if(partnerHm.containsKey(partnerId)){
+        if(!partnerHm.isEmpty()&&partnerHm.containsKey(partnerId)){
             if(partnerHm.containsKey(partnerId)){
                 DeliveryPartner partner=partnerHm.get(partnerId);
                 return partner.getNumberOfOrders();
@@ -78,7 +78,7 @@ public class OrderRepository {
 
     public List<String> getOrdersByPartnerIdRepo(String partnerId) {
         List<String >list=new ArrayList<>();
-        if(pairHm.containsKey(partnerId)){
+        if(!pairHm.isEmpty()&&pairHm.containsKey(partnerId)){
 
             return pairHm.get(partnerId);
 
@@ -116,7 +116,7 @@ public class OrderRepository {
         int HH=Integer.valueOf(ans[0]);
         int MM=Integer.valueOf(ans[1]);
         int timeCurr=HH*60+MM;
-        if (pairHm.containsKey(partnerId)){
+        if (!pairHm.isEmpty()&&pairHm.containsKey(partnerId)){
             List<String> list = pairHm.get(partnerId);
             for (String s : list
             ) {
@@ -132,7 +132,7 @@ public class OrderRepository {
     public String getLastDeliveryTimeByPartnerIdRepo(String partnerId) {
         int time=0;
         String ans="";
-        if (pairHm.containsKey(partnerId)){
+        if (!pairHm.isEmpty()&&pairHm.containsKey(partnerId)){
             List<String> list = pairHm.get(partnerId);
 
             for (String s : list
@@ -153,9 +153,9 @@ public class OrderRepository {
     }
 
     public void deletePartnerByIdRepo(String partnerId) {
-        if (pairHm.containsKey(partnerId)){
+        if (!pairHm.isEmpty()&&pairHm.containsKey(partnerId)){
             pairHm.remove(partnerId);
-            if(partnerHm.containsKey(partnerId)) {
+            if(!partnerHm.isEmpty()&&partnerHm.containsKey(partnerId)) {
                 partnerHm.remove(partnerId);
             }
         }
@@ -163,19 +163,26 @@ public class OrderRepository {
     }
 
     public void deleteOrderByIdRepo(String orderId) {
-        String partnerid=pairHmOrder.get(orderId);
-        if (!isNull(partnerid)){
-            if(pairHm.containsKey(partnerid)){
-                List<String> list= pairHm.get(partnerid);
-                for (String s:list
-                     ) {
-                    if(s.equals(orderId)){
-                        list.remove(orderId);
+        if(!pairHmOrder.isEmpty()){
+            String partnerid=pairHmOrder.get(orderId);
+            if (!isNull(partnerid)){
+                if(!pairHm.isEmpty()&&pairHm.containsKey(partnerid)){
+                    List<String> list= pairHm.get(partnerid);
+                    for (String s:list
+                    ) {
+                        if(s.equals(orderId)){
+                            list.remove(orderId);
+                        }
                     }
                 }
+
+            }
+            if(!orderHashMap.isEmpty() && orderHashMap.containsKey(orderId)){
+                orderHashMap.remove(orderId);
             }
 
         }
-        orderHashMap.remove(orderId);
+
+
     }
 }
